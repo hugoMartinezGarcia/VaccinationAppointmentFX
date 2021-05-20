@@ -1,0 +1,9 @@
+D;d01;Pedro Cavadas;true
+D;d02;Julio Bastida;true
+D;d03;Marta Garmendia;true
+D;d04;Teresa Lobato;true
+D;d05;Elena Martínez;true
+D;d06;Enrique Cerezuela;true
+D;d07;Felix De Vera;true
+D;d08;Andrea Ferreras;false
+D;d09;Antonio Doctor;true

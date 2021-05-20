@@ -1,0 +1,30 @@
+Date: 2020-10-10
+Doctor: Pedro Cavadas - d01 - activated
+Nurses: [Inés López - n04 - activated]
+Patients: [Patient 6 - ARN Vaccine, Patient 5 - ARN Vaccine, Patient 2 - ARN Vaccine]
+
+Date: 2020-10-11
+Doctor: Pedro Cavadas - d01 - activated
+Nurses: [Maria Trives - n02 - activated]
+Patients: []
+
+Date: 2020-10-12
+Doctor: Pedro Cavadas - d01 - activated
+Nurses: [Maria Trives - n02 - activated, Ana Caravaca - n03 - activated, Inés López - n04 - activated]
+Patients: []
+
+Date: 2020-10-15
+Doctor: Teresa Lobato - d04 - activated
+Nurses: [Lola Herrero - n01 - activated, Maria Trives - n02 - activated, Ana Caravaca - n03 - activated, Inés López - n04 - activated]
+Patients: []
+
+Date: 2020-10-16
+Doctor: Marta Garmendia - d03 - activated
+Nurses: [Gloria López - n06 - activated, Ramón Latorre - n05 - activated]
+Patients: [Patient 4 - ARN Vaccine, Patient 7 - ARN Vaccine, Eduardo Sanchís - ARN Vaccine, Patient 14 - ARN Vaccine, Antonio Martínez - ARN Vaccine, Patient 18 - ARN Vaccine, Patient 13 - ARN Vaccine, Patient 11 - ARN Vaccine, Patient 17 - ARN Vaccine, Patient 16 - ARN Vaccine, José Francés - NO ARN, Concha García - NO ARN, Patient 1 - NO ARN,  Patient 9 - NO ARN, Pepe Felipe - NO ARN, Patient 10 - ARN Vaccine, Ana Buitrago - ARN Vaccine, Antonio Tomás - ARN Vaccine, Patient 3 - ARN Vaccine, Miriam Reus - ARN Vaccine]
+
+Date: 2021-01-01
+Doctor: Elena Martínez - d05 - activated
+Nurses: [Inés López - n04 - activated, Ana Caravaca - n03 - activated]
+Patients: [Patient 8 - NO ARN,  Patient 15 - NO ARN, Hugo Martínez - NO ARN, Juan José Pérez - NO ARN, Ana Herrero - NO ARN]
+

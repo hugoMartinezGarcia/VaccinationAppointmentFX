@@ -1,0 +1,6 @@
+N;n01;Lola Herrero;true
+N;n02;Maria Trives;true
+N;n03;Ana Caravaca;true
+N;n04;Inés López;true
+N;n05;Ramón Latorre;true
+N;n06;Gloria López;true
