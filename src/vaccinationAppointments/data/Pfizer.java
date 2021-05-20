@@ -3,7 +3,7 @@ package vaccinationAppointments.data;
 public class Pfizer extends Vaccine
                     implements Freezable {
 
-    boolean frozen;
+    private boolean frozen;
 
     public Pfizer(String name, boolean freezable) {
         super(name);

@@ -1,14 +1,16 @@
-// Class to store data about patients
-// by Hugo Martínez
-
 package vaccinationAppointments.data;
 
+/**
+ * Class to store data about patients
+ * @author Hugo Martínez
+ * @version 1.0
+ */
 public class Patient extends vaccinationAppointments.data.Person {
-    int phoneNumber;
-    int nSIP;
-    int age;
-    String genre;
-    boolean diabetes;
+    private int phoneNumber;
+    private int nSIP;
+    private int age;
+    private String genre;
+    private boolean diabetes;
 
     public Patient(int age, boolean diabetes, String genre, String name, int phoneNumber, int nSIP) {
         super(name);

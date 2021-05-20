@@ -1,13 +1,15 @@
-// Class to store data about doctors
-// by Hugo Martínez
-
 package vaccinationAppointments.data;
 
+/**
+ * Class to store data about doctors
+ * @author Hugo Martínez
+ * version 1.0
+ */
 public class Doctor extends vaccinationAppointments.data.Person
                     implements vaccinationAppointments.data.Activable {
-    String id;
-    String type;
-    boolean activated;
+    private String id;
+    private String type;
+    private boolean activated;
 
     public Doctor(String type, String name, String id, boolean activated) {
         super(name);

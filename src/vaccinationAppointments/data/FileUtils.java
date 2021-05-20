@@ -1,25 +1,31 @@
-// Class to prepare the data to be loaded or saved to files.
-// by Hugo Martínez
-
 package vaccinationAppointments.data;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Class to prepare the data to be loaded or saved to files.
+ * @author Hugo Martínez
+ * @version 1.0
+ */
 public class FileUtils {
-    public static ArrayList<vaccinationAppointments.data.Person> loadProfessionals() {
-        ArrayList<vaccinationAppointments.data.Person> result = new ArrayList<>();
+    /**
+     * Static method to load a ArrayList of Doctors from a file called doctors.txt
+     * @return a ArrayList of Doctors
+     */
+    public static ArrayList<Doctor> loadDoctors() {
+        ArrayList<Doctor> result = new ArrayList<>();
 
-        if (new File("professionals.txt").exists()) {
-            BufferedReader inputProfessionals = null;
+        if (new File("doctors.txt").exists()) {
+            BufferedReader inputDoctors = null;
             try {
-                inputProfessionals = new BufferedReader(new FileReader("professionals.txt"));
+                inputDoctors = new BufferedReader(new FileReader("doctors.txt"));
 
                 String line;
 
                 do {
-                    line = inputProfessionals.readLine();
+                    line = inputDoctors.readLine();
 
                     if (line != null) {
                         String[] fragmentsLine = line.split(";");
@@ -28,22 +34,16 @@ public class FileUtils {
                         String id = fragmentsLine[2];
                         boolean activated = Boolean.parseBoolean(fragmentsLine[3]);
 
-                        if (type.equals("D")) {
-                            Doctor d = new Doctor(type, name, id, activated);
-                            result.add(d);
-                        } else {
-                            Nurse n = new Nurse(type, name, id, activated);
-                            result.add(n);
-                        }
-
+                        Doctor d = new Doctor(type, name, id, activated);
+                        result.add(d);
                     }
                 } while (line != null);
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
                 try {
-                    if (inputProfessionals != null) {
-                        inputProfessionals.close();
+                    if (inputDoctors != null) {
+                        inputDoctors.close();
                     }
                 } catch (IOException e) {
                 }
@@ -51,26 +51,55 @@ public class FileUtils {
         }
         return result;
     }
-    public static void saveProfessionals(ArrayList<vaccinationAppointments.data.Person> professionals) {
-        PrintWriter outputProfessional = null;
-        try {
-            outputProfessional = new PrintWriter("professionals.txt");
 
-            for (vaccinationAppointments.data.Person p: professionals) {
-                if (p instanceof Doctor) {
-                    outputProfessional.println(((Doctor) p).prepareDoctorToFile());
-                } else if (p instanceof Nurse) {
-                    outputProfessional.println(((Nurse) p).prepareNurseToFile());
+    /**
+     * Static method to load a ArrayList of Nurses from a file called nurses.txt
+     * @return a ArrayList of Nurses
+     */
+    public static ArrayList<Nurse> loadNurses() {
+        ArrayList<Nurse> result = new ArrayList<>();
+
+        if (new File("nurses.txt").exists()) {
+            BufferedReader inputNurses = null;
+            try {
+                inputNurses = new BufferedReader(new FileReader("nurses.txt"));
+
+                String line;
+
+                do {
+                    line = inputNurses.readLine();
+
+                    if (line != null) {
+                        String[] fragmentsLine = line.split(";");
+                        String type = fragmentsLine[0];
+                        String name = fragmentsLine[1];
+                        String id = fragmentsLine[2];
+                        boolean activated = Boolean.parseBoolean(fragmentsLine[3]);
+
+                        Nurse n = new Nurse(type, name, id, activated);
+                        result.add(n);
+
+
+                    }
+                } while (line != null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (inputNurses != null) {
+                        inputNurses.close();
+                    }
+                } catch (IOException e) {
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (outputProfessional != null)
-                outputProfessional.close();
         }
+        return result;
     }
 
+    /**
+     * Static method to load a ArrayList of Patients from a file called patients.txt
+     * @return a ArrayList of Patients
+     */
     public static ArrayList<Patient> loadPatients() {
         ArrayList<Patient> result = new ArrayList<>();
 
@@ -111,6 +140,10 @@ public class FileUtils {
         return result;
     }
 
+    /**
+     * Static method to save in a file a ArrayList of Patients patients waiting to be vaccinated
+     * @param patients List of the patients
+     */
     public static void savePatients(ArrayList<Patient> patients) {
         PrintWriter outputPatient = null;
         try {
@@ -127,6 +160,10 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Static method to load a HashMap with name of the vaccines and its stock
+     * @return a HashMap with the name of the vaccines and its stock
+     */
     public static HashMap<String, Integer> loadVaccines() {
         HashMap<String, Integer> result = new HashMap<>();
 
@@ -162,6 +199,10 @@ public class FileUtils {
         return result;
     }
 
+    /**
+     * Static method to save in a file called stock.txt a HashMap with the name of the vaccines and its stock
+     * @param vaccines HashMap with the name of the vaccines and its stock
+     */
     public static void saveVaccines(HashMap<String, Integer> vaccines) {
         PrintWriter outputVaccine = null;
         try {
@@ -178,6 +219,10 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Static method to load a ArrayList of Vaccination Events from the file events.txt
+     * @return ArrayList of Vaccination Events
+     */
     public static ArrayList<String> loadEvents() {
         ArrayList<String> result = new ArrayList<>();
 
@@ -209,6 +254,10 @@ public class FileUtils {
         return result;
     }
 
+    /**
+     * Static method to save a ArrayList of Vaccination Events
+     * @param events ArrayList of Vaccination Events
+     */
     public static void saveEvents(ArrayList<String> events) {
         PrintWriter outputEvent = null;
         try {

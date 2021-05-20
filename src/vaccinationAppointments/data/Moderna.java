@@ -3,7 +3,7 @@ package vaccinationAppointments.data;
 public class Moderna extends Vaccine
                         implements Freezable {
 
-    boolean frozen;
+    private boolean frozen;
 
     public Moderna(String name, boolean freezable) {
         super(name);

@@ -18,25 +18,25 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="nurseButton" layoutX="67.0" layoutY="168.0" mnemonicParsing="false" onAction="#selectNurse" prefHeight="25.0" prefWidth="97.0" text="Select nurse" />
-            <Label layoutX="32.0" layoutY="23.0" text="CREATE NEW VACCINATION EVENT">
+            <Button fx:id="nurseButton" layoutX="67.0" layoutY="168.0" mnemonicParsing="false" onAction="#selectNurse" prefHeight="25.0" prefWidth="97.0" text="Select nurse" AnchorPane.leftAnchor="67.0" AnchorPane.rightAnchor="136.0" />
+            <Label layoutX="32.0" layoutY="23.0" text="CREATE NEW VACCINATION EVENT" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="47.0">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button fx:id="buttonNext" layoutX="202.0" layoutY="73.0" mnemonicParsing="false" onAction="#confirmDate" text="Select date" />
-            <Button fx:id="doctorButton" layoutX="67.0" layoutY="143.0" mnemonicParsing="false" onAction="#selectDoctor" prefHeight="25.0" prefWidth="97.0" text="Select doctor" />
-            <DatePicker fx:id="date" layoutX="14.0" layoutY="73.0" />
-            <ComboBox fx:id="comboPfizer" layoutX="134.0" layoutY="245.0" prefHeight="25.0" prefWidth="50.0" />
-            <ComboBox fx:id="comboJanssen" layoutX="134.0" layoutY="277.0" prefHeight="25.0" prefWidth="26.0" />
-            <ComboBox fx:id="comboModerna" layoutX="134.0" layoutY="314.0" prefHeight="25.0" prefWidth="20.0" />
-            <ComboBox fx:id="comboAstra" layoutX="134.0" layoutY="346.0" prefHeight="25.0" prefWidth="12.0" />
-            <Label fx:id="lblPfizer" layoutX="44.0" layoutY="249.0" prefHeight="17.0" prefWidth="57.0" text="Pfizer" />
-            <Label fx:id="lblJanssen" layoutX="44.0" layoutY="281.0" prefHeight="17.0" prefWidth="57.0" text="Janssen" />
-            <Label fx:id="lblModerna" layoutX="44.0" layoutY="318.0" prefHeight="17.0" prefWidth="57.0" text="Moderna" />
-            <Label fx:id="lblAstra" layoutX="44.0" layoutY="350.0" prefHeight="17.0" prefWidth="75.0" text="AstraZeneca" />
-            <Button fx:id="vaccinesButton" layoutX="124.0" layoutY="405.0" mnemonicParsing="false" onAction="#confirmVaccines" text="CONFIRM" />
-            <Button fx:id="confirmNursesButton" layoutX="188.0" layoutY="168.0" mnemonicParsing="false" onAction="#confirmNurses" text="Confirm nurses" />
+            <Button fx:id="buttonNext" layoutX="202.0" layoutY="73.0" mnemonicParsing="false" onAction="#confirmDate" text="Select date" AnchorPane.leftAnchor="202.0" AnchorPane.rightAnchor="23.0" />
+            <Button fx:id="doctorButton" layoutX="67.0" layoutY="143.0" mnemonicParsing="false" onAction="#selectDoctor" prefHeight="25.0" prefWidth="97.0" text="Select doctor" AnchorPane.leftAnchor="67.0" AnchorPane.rightAnchor="136.0" />
+            <DatePicker fx:id="date" layoutX="14.0" layoutY="73.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="112.0" />
+            <ComboBox fx:id="comboPfizer" layoutX="134.0" layoutY="245.0" prefHeight="25.0" prefWidth="50.0" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="116.0" />
+            <ComboBox fx:id="comboJanssen" layoutX="134.0" layoutY="277.0" prefHeight="25.0" prefWidth="26.0" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="116.0" />
+            <ComboBox fx:id="comboModerna" layoutX="134.0" layoutY="314.0" prefHeight="25.0" prefWidth="20.0" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="116.0" />
+            <ComboBox fx:id="comboAstra" layoutX="134.0" layoutY="346.0" prefHeight="25.0" prefWidth="12.0" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="116.0" />
+            <Label fx:id="lblPfizer" layoutX="44.0" layoutY="249.0" prefHeight="17.0" prefWidth="57.0" text="Pfizer" AnchorPane.leftAnchor="44.0" AnchorPane.rightAnchor="199.0" />
+            <Label fx:id="lblJanssen" layoutX="44.0" layoutY="281.0" prefHeight="17.0" prefWidth="57.0" text="Janssen" AnchorPane.leftAnchor="44.0" AnchorPane.rightAnchor="199.0" />
+            <Label fx:id="lblModerna" layoutX="44.0" layoutY="318.0" prefHeight="17.0" prefWidth="57.0" text="Moderna" AnchorPane.leftAnchor="44.0" AnchorPane.rightAnchor="199.0" />
+            <Label fx:id="lblAstra" layoutX="44.0" layoutY="350.0" prefHeight="17.0" prefWidth="75.0" text="AstraZeneca" AnchorPane.leftAnchor="44.0" AnchorPane.rightAnchor="199.0" />
+            <Button fx:id="vaccinesButton" layoutX="124.0" layoutY="405.0" mnemonicParsing="false" onAction="#confirmVaccines" text="Confirm" AnchorPane.leftAnchor="124.0" AnchorPane.rightAnchor="107.0" />
+            <Button fx:id="confirmNursesButton" layoutX="184.0" layoutY="168.0" mnemonicParsing="false" onAction="#confirmNurses" text="Confirm nurses" AnchorPane.leftAnchor="184.0" AnchorPane.rightAnchor="19.0" />
          </children>
       </AnchorPane>
    </center>
