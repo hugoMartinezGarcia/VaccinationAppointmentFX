@@ -19,12 +19,12 @@
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="nurseButton" layoutX="67.0" layoutY="168.0" mnemonicParsing="false" onAction="#selectNurse" prefHeight="25.0" prefWidth="97.0" text="Select nurse" />
-            <Label layoutX="115.0" layoutY="44.0" text="NEW DATE:">
+            <Label layoutX="32.0" layoutY="23.0" text="CREATE NEW VACCINATION EVENT">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button fx:id="buttonNext" layoutX="202.0" layoutY="73.0" mnemonicParsing="false" onAction="#nextStep" text="Select date" />
+            <Button fx:id="buttonNext" layoutX="202.0" layoutY="73.0" mnemonicParsing="false" onAction="#confirmDate" text="Select date" />
             <Button fx:id="doctorButton" layoutX="67.0" layoutY="143.0" mnemonicParsing="false" onAction="#selectDoctor" prefHeight="25.0" prefWidth="97.0" text="Select doctor" />
             <DatePicker fx:id="date" layoutX="14.0" layoutY="73.0" />
             <ComboBox fx:id="comboPfizer" layoutX="134.0" layoutY="245.0" prefHeight="25.0" prefWidth="50.0" />

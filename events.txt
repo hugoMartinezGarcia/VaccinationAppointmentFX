@@ -28,3 +28,8 @@ Doctor: Elena Martínez - d05 - activated
 Nurses: [Inés López - n04 - activated, Ana Caravaca - n03 - activated]
 Patients: [Patient 8 - NO ARN,  Patient 15 - NO ARN, Hugo Martínez - NO ARN, Juan José Pérez - NO ARN, Ana Herrero - NO ARN]
 
+Date: 2021-05-20
+Doctor: d06 - Enrique Cerezuela - activated
+Nurses: [n01 - Lola Herrero - activated, n04 - Inés López - activated, n06 - Gloria López - activated]
+Patients: [Patient 6 - ARN Vaccine, Patient 5 - ARN Vaccine, Patient 2 - NO ARN, Patient 4 - NO ARN, Patient 7 - NO ARN, Patient 14 - NO ARN]
+

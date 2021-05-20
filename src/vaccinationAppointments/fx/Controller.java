@@ -10,7 +10,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.*;
 
-import static vaccinationAppointments.data.FileUtils.saveVaccines;
+import static vaccinationAppointments.data.FileUtils.*;
 
 public class Controller implements Initializable {
     @FXML
@@ -53,6 +53,7 @@ public class Controller implements Initializable {
     private HashMap<String, Integer> selectedVaccines;
     private ArrayList<String> events;
     private ArrayList<Nurse> selectedNurses;
+    private Doctor doctorSelected;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -79,8 +80,8 @@ public class Controller implements Initializable {
     }
 
 
-    public void nextStep(ActionEvent actionEvent) {
-        if (date.getValue() == null || foundDate(date.getValue().toString())){
+    public void confirmDate(ActionEvent actionEvent) {
+        if (date.getValue() == null || foundDate(date.toString())){
             Alert dialog = new Alert(Alert.AlertType.ERROR);
             dialog.setTitle("Error");
             dialog.setHeaderText("Incorrect DATA");
@@ -89,14 +90,10 @@ public class Controller implements Initializable {
 
         }
         else {
-
-            System.out.println(date.getValue().toString());
             lblTitle.setText("DOCTORS");
             for (Doctor d : doctors) {
                 list.getItems().add(d);
             }
-
-            Doctor doctorSelected = (Doctor) list.getSelectionModel().getSelectedItem();
 
             lblTitle.setVisible(true);
             buttonNext.setVisible(false);
@@ -104,7 +101,7 @@ public class Controller implements Initializable {
         }
     }
     public void selectDoctor(ActionEvent actionEvent) {
-
+        doctorSelected = (Doctor) list.getSelectionModel().getSelectedItem();
         doctorButton.setVisible(false);
         nurseButton.setVisible(true);
         confirmNursesButton.setVisible(true);
@@ -153,7 +150,14 @@ public class Controller implements Initializable {
             vaccines.put(key, vaccines.get(key) - selectedVaccines.get(key));
         }
 
+        addVaccinationEvent();
         saveVaccines(vaccines);
+
+        Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+        dialog.setTitle("INFORMATION");
+        dialog.setHeaderText("VACCINATION EVENT CREATED");
+        dialog.setContentText("The vaccination event has been created successfully and has been added to the events.txt file");
+        dialog.showAndWait();
     }
 
     private void addToCombo(ComboBox<Integer> combo, int totalNumber) {
@@ -175,9 +179,7 @@ public class Controller implements Initializable {
         ArrayList<String> result = new ArrayList<>();
 
         if (new File("events.txt").exists()) {
-            BufferedReader inputEvents = null;
-            try {
-                inputEvents = new BufferedReader(new FileReader("events.txt"));
+            try (BufferedReader inputEvents = new BufferedReader(new FileReader("events.txt"))) {
 
                 String line;
 
@@ -190,13 +192,6 @@ public class Controller implements Initializable {
                 } while (line != null);
             } catch (IOException e) {
                 e.printStackTrace();
-            } finally {
-                try {
-                    if (inputEvents != null) {
-                        inputEvents.close();
-                    }
-                } catch (IOException e) {
-                }
             }
         }
         return result;
@@ -401,6 +396,59 @@ public class Controller implements Initializable {
             if (outputPatient != null)
                 outputPatient.close();
         }
+    }
+
+    private ArrayList<String> selectPatients(HashMap<String, Integer> selectedVaccines) {
+        ArrayList<String> selectedPatients = new ArrayList<>();
+        int index;
+
+        for (String key: selectedVaccines.keySet()) {
+            if (key.equals("Pfizer") || key.equals("Moderna")) {
+                index = 0;
+                while (selectedVaccines.get(key) > 0 && index < patients.size()) {
+                    if (patients.get(index).getAge() >= 60 || patients.get(index).isDiabetes()) {
+                        selectedPatients.add(patients.get(index) + " - ARN Vaccine");
+                        patients.remove(index);
+                        selectedVaccines.put(key, selectedVaccines.get(key) - 1);
+                        index--;
+                    }
+                    index++;
+                }
+
+                index = 0;
+                while (selectedVaccines.get(key) > 0 && index < patients.size()) {
+                    selectedPatients.add(patients.get(index) + " - ARN Vaccine");
+                    patients.remove(index);
+                    selectedVaccines.put(key, selectedVaccines.get(key) - 1);
+                }
+            } else {
+                index = 0;
+                while (selectedVaccines.get(key) > 0 && index < patients.size()) {
+                    selectedPatients.add(patients.get(index) + " - NO ARN");
+                    patients.remove(index);
+                    selectedVaccines.put(key, selectedVaccines.get(key) - 1);
+                }
+            }
+        }
+
+        savePatients(patients);
+        return selectedPatients;
+    }
+
+    private void addVaccinationEvent() {
+        patients.sort(new Comparator<>() {
+            @Override
+            public int compare(Patient p1, Patient p2) {
+                return Integer.compare(p2.getAge(), p1.getAge());
+            }
+        });
+
+        ArrayList<String> patientsSelected = selectPatients(selectedVaccines);
+
+        //Finally the event is saved.
+        VaccinationEvent vE = new VaccinationEvent(date.getValue().toString(), doctorSelected, selectedNurses, patientsSelected);
+        events.add(vE.toString());
+        saveEvents(events);
     }
 }
 
