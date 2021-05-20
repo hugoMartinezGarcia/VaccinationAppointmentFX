@@ -1,6 +1,5 @@
 package vaccinationAppointments.fx;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,28 +10,49 @@ import java.io.*;
 import java.net.URL;
 import java.util.*;
 
+import static vaccinationAppointments.data.FileUtils.saveVaccines;
+
 public class Controller implements Initializable {
+    @FXML
+    private Button confirmNursesButton;
+    @FXML
+    private Label lblPfizer;
+    @FXML
+    private Label lblJanssen;
+    @FXML
+    private Label lblModerna;
+    @FXML
+    private Label lblAstra;
+    @FXML
+    private ComboBox<Integer> comboJanssen;
+    @FXML
+    private ComboBox<Integer> comboModerna;
+    @FXML
+    private ComboBox<Integer> comboAstra;
+    @FXML
+    private Button vaccinesButton;
+    @FXML
+    private ComboBox<Integer> comboPfizer;
+    @FXML
+    private DatePicker date;
     @FXML
     private Button nurseButton;
     @FXML
     private Button doctorButton;
     @FXML
-    private Label listTitle;
-    @FXML
-    private TextField txtDate;
+    private Label lblTitle;
     @FXML
     private Button buttonNext;
     @FXML
     private ListView list;
 
-    ArrayList<Doctor> doctors;
-    ArrayList<Nurse> nurses;
-    ArrayList<Patient> patients;
-    HashMap<String, Integer> vaccines;
-    ArrayList<String> events;
-    ArrayList<Nurse> selectedNurses;
-    ArrayList<Doctor> selectedDoctors;
-    Scanner sc;
+    private ArrayList<Doctor> doctors;
+    private ArrayList<Nurse> nurses;
+    private ArrayList<Patient> patients;
+    private HashMap<String, Integer> vaccines;
+    private HashMap<String, Integer> selectedVaccines;
+    private ArrayList<String> events;
+    private ArrayList<Nurse> selectedNurses;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -40,14 +60,27 @@ public class Controller implements Initializable {
         doctors = loadDoctors();
         nurses = loadNurses();
         vaccines = loadVaccines();
+        patients = loadPatients();
+        selectedNurses = new ArrayList<>();
+        selectedVaccines = new HashMap<>();
+        lblTitle.setVisible(false);
         doctorButton.setVisible(false);
         nurseButton.setVisible(false);
+        confirmNursesButton.setVisible(false);
+        comboPfizer.setVisible(false);
+        comboJanssen.setVisible(false);
+        comboModerna.setVisible(false);
+        comboAstra.setVisible(false);
+        vaccinesButton.setVisible(false);
+        lblPfizer.setVisible(false);
+        lblJanssen.setVisible(false);
+        lblModerna.setVisible(false);
+        lblAstra.setVisible(false);
     }
 
 
     public void nextStep(ActionEvent actionEvent) {
-        buttonNext.setVisible(false);
-        if (txtDate.getText().isEmpty() || foundDate(txtDate.getText())) {
+        if (date.getValue() == null || foundDate(date.getValue().toString())){
             Alert dialog = new Alert(Alert.AlertType.ERROR);
             dialog.setTitle("Error");
             dialog.setHeaderText("Incorrect DATA");
@@ -56,42 +89,78 @@ public class Controller implements Initializable {
 
         }
         else {
-            listTitle.setText("DOCTORS");
+
+            System.out.println(date.getValue().toString());
+            lblTitle.setText("DOCTORS");
             for (Doctor d : doctors) {
                 list.getItems().add(d);
             }
 
             Doctor doctorSelected = (Doctor) list.getSelectionModel().getSelectedItem();
-            if (doctorSelected != null)
-                selectedDoctors.add(doctorSelected);
+
+            lblTitle.setVisible(true);
+            buttonNext.setVisible(false);
             doctorButton.setVisible(true);
         }
     }
-    public void confirmDoctor(ActionEvent actionEvent) {
+    public void selectDoctor(ActionEvent actionEvent) {
 
         doctorButton.setVisible(false);
         nurseButton.setVisible(true);
+        confirmNursesButton.setVisible(true);
         list.getItems().clear();
-        listTitle.setText("NURSES");
+        lblTitle.setText("NURSES");
         for (Nurse n : nurses) {
             list.getItems().add(n);
         }
     }
 
-    public void confirmNurse(ActionEvent actionEvent) {
+    public void selectNurse(ActionEvent actionEvent) {
         Nurse nurseSelected = (Nurse) list.getSelectionModel().getSelectedItem();
-
-        nurseButton.setVisible(false);
-        list.getItems().clear();
-
-
-
-        for (String key: vaccines.keySet()) {
-            list.getItems().add(key + " - " + vaccines.get(key));
-        }
-
+        selectedNurses.add(nurseSelected);
     }
 
+    public void confirmNurses(ActionEvent actionEvent) {
+
+        nurseButton.setVisible(false);
+        confirmNursesButton.setVisible(false);
+        list.getItems().clear();
+        lblTitle.setVisible(false);
+
+        addToCombo(comboPfizer, vaccines.get("Pfizer"));
+        addToCombo(comboJanssen, vaccines.get("Janssen"));
+        addToCombo(comboModerna, vaccines.get("Moderna"));
+        addToCombo(comboAstra, vaccines.get("AstraZeneca"));
+
+        comboPfizer.setVisible(true);
+        comboJanssen.setVisible(true);
+        comboModerna.setVisible(true);
+        comboAstra.setVisible(true);
+        vaccinesButton.setVisible(true);
+        lblPfizer.setVisible(true);
+        lblJanssen.setVisible(true);
+        lblModerna.setVisible(true);
+        lblAstra.setVisible(true);
+    }
+
+    public void confirmVaccines(ActionEvent actionEvent) {
+        selectedVaccines.put("Pfizer", comboPfizer.getValue());
+        selectedVaccines.put("Janssen", comboJanssen.getValue());
+        selectedVaccines.put("Moderna", comboModerna.getValue());
+        selectedVaccines.put("AstraZeneca", comboAstra.getValue());
+
+        for (String key: vaccines.keySet()) {
+            vaccines.put(key, vaccines.get(key) - selectedVaccines.get(key));
+        }
+
+        saveVaccines(vaccines);
+    }
+
+    private void addToCombo(ComboBox<Integer> combo, int totalNumber) {
+        for (int i = 0; i <= totalNumber; i++) {
+            combo.getItems().add(i);
+        }
+    }
     private boolean foundDate(String date) {
         boolean result = false;
         for (String e: events) {
@@ -260,6 +329,78 @@ public class Controller implements Initializable {
             }
         }
         return result;
+    }
+
+    private void saveVaccines(HashMap<String, Integer> vaccines) {
+        PrintWriter outputVaccine = null;
+        try {
+            outputVaccine = new PrintWriter("stock.txt");
+
+            for (String key : vaccines.keySet()) {
+                outputVaccine.println(key + ";" + vaccines.get(key));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (outputVaccine != null)
+                outputVaccine.close();
+        }
+    }
+
+    private ArrayList<Patient> loadPatients() {
+        ArrayList<Patient> result = new ArrayList<>();
+
+        if (new File("patients.txt").exists()) {
+            BufferedReader inputPatients = null;
+            try {
+                inputPatients = new BufferedReader(new FileReader("patients.txt"));
+
+                String line;
+
+                do {
+                    line = inputPatients.readLine();
+
+                    if (line != null) {
+                        String[] fragmentsLine = line.split(";");
+                        int age = Integer.parseInt(fragmentsLine[0]);
+                        boolean diabetes = Boolean.parseBoolean(fragmentsLine[1]);
+                        String genre = fragmentsLine[2];
+                        String name = fragmentsLine[3];
+                        int phone = Integer.parseInt(fragmentsLine[4]);
+                        int nSIP = Integer.parseInt(fragmentsLine[5]);
+
+                        Patient p = new Patient(age, diabetes, genre, name, phone, nSIP);
+                        result.add(p);
+                    }
+                } while (line != null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (inputPatients != null) {
+                        inputPatients.close();
+                    }
+                } catch (IOException e) {
+                }
+            }
+        }
+        return result;
+    }
+
+    private void savePatients(ArrayList<Patient> patients) {
+        PrintWriter outputPatient = null;
+        try {
+            outputPatient = new PrintWriter("patients.txt");
+
+            for (Patient p: patients) {
+                outputPatient.println(p.preparePatientToFile());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (outputPatient != null)
+                outputPatient.close();
+        }
     }
 }
 
